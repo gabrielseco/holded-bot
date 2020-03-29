@@ -1,6 +1,6 @@
 import puppeteer from 'puppeteer';
 import { DateTime } from 'luxon';
-import { login, startWithUrl } from './puppetter';
+import { login, startWithUrl, addTimeButton, fillInputs } from './puppetter';
 import { Routes } from './routes';
 
 const routes = Routes({ business: 'streamloots' });
@@ -18,25 +18,26 @@ async function startWork(): Promise<any> {
 
     const time = DateTime.local().toLocaleString(DateTime.TIME_SIMPLE);
     const timeEnd = DateTime.local()
-      .plus({ hour: 1 })
+      .plus({ hour: 6 })
       .toLocaleString(DateTime.TIME_SIMPLE);
-    console.log({ time, timeEnd });
 
     login(page, {
       username: 'gabriel@streamloots.com',
       password: 'yZZ1X1$r2#N3'
     });
-    await page.waitForNavigation();
-
-    page.goto(routes.TRACKING);
 
     await page.waitForNavigation();
 
-    const links = await page.$$('div.timeline-additem');
-    const link = links[dayOfTheWeek - 1];
-    await page.evaluate(link => link.click(), link);
+    await page.goto(routes.TRACKING);
 
-    //await browser.close();
+    await addTimeButton(page, dayOfTheWeek);
+
+    await fillInputs(page, {
+      time,
+      timeEnd
+    });
+
+    await browser.close();
   } catch (error) {
     console.log(error);
   }
