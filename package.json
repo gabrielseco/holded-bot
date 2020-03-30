@@ -31,6 +31,8 @@
     "eslint": "^6.8.0",
     "eslint-config-prettier": "^6.10.1",
     "eslint-plugin-prettier": "^3.1.2",
+    "husky": "^4.2.3",
+    "lint-staged": "^10.0.10",
     "prettier": "2.0.2",
     "pkg": "^4.4.0",
     "rimraf": "^2.6.3",
@@ -38,9 +40,10 @@
     "typescript": "3.8.3"
   },
   "dependencies": {
+    "@inquirer/input": "0.0.9-alpha.0",
+    "@inquirer/password": "0.0.8-alpha.0",
     "commander": "^2.20.0",
-    "husky": "^4.2.3",
-    "lint-staged": "^10.0.10",
+    "keytar": "^5.4.0",
     "luxon": "^1.22.2",
     "puppeteer": "^2.1.1"
   },

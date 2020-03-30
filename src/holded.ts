@@ -9,14 +9,18 @@ import {
 } from './puppetter';
 import { Routes } from './routes';
 
-const routes = Routes({ business: 'streamloots' });
-
 export interface HoldedArgs {
   start: boolean;
   stop: boolean;
 }
 
-async function startWork(): Promise<any> {
+export interface AccountArgs {
+  company: string;
+  email: string;
+  password: string;
+}
+
+async function startWork(account: AccountArgs, routes): Promise<any> {
   try {
     const url = routes.LOGIN;
     const { page, browser } = await startWithUrl(puppeteer, url);
@@ -28,8 +32,8 @@ async function startWork(): Promise<any> {
       .toLocaleString(DateTime.TIME_SIMPLE);
 
     login(page, {
-      username: 'gabriel@streamloots.com',
-      password: 'yZZ1X1$r2#N3'
+      username: account.email,
+      password: account.password
     });
 
     await page.waitForNavigation();
@@ -49,15 +53,15 @@ async function startWork(): Promise<any> {
   }
 }
 
-async function stopWork() {
+async function stopWork(account: AccountArgs, routes) {
   const url = routes.LOGIN;
   const { page, browser } = await startWithUrl(puppeteer, url);
   const time = DateTime.local().toLocaleString(DateTime.TIME_SIMPLE);
   const date = DateTime.local().toFormat('dd-MM-yyyy');
 
   login(page, {
-    username: 'gabriel@streamloots.com',
-    password: 'yZZ1X1$r2#N3'
+    username: account.email,
+    password: account.password
   });
 
   await page.waitForNavigation();
@@ -69,11 +73,12 @@ async function stopWork() {
   await browser.close();
 }
 
-export async function holded(args: HoldedArgs) {
+export async function holded(account: AccountArgs, args: HoldedArgs) {
+  const routes = Routes({ business: account.company });
   if (args.start) {
-    startWork();
+    startWork(account, routes);
   }
   if (args.stop) {
-    stopWork();
+    stopWork(account, routes);
   }
 }
