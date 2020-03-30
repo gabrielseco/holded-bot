@@ -74,3 +74,23 @@ export async function fillInputs(page, options) {
     console.log('err adding time', err);
   }
 }
+
+export async function editLastTimeline(page, options) {
+  try {
+    await page.evaluate(date => {
+      const selector = `td[data-date="${date}"] .timeline-item`;
+      const elements: any[] = [...document.querySelectorAll(selector)];
+
+      elements[elements.length - 1].click();
+    }, options.date);
+
+    await fillInput(page, {
+      selector: 'timerange-inputend',
+      time: options.time
+    });
+
+    await page.keyboard.press('Enter');
+  } catch (err) {
+    console.log('error editing last timeline');
+  }
+}
