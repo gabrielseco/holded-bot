@@ -48,6 +48,8 @@ async function startWork(account: AccountArgs, routes): Promise<any> {
     });
 
     await browser.close();
+
+    console.log(`Start work at ${time}`);
   } catch (error) {
     console.log(error);
   }
@@ -71,6 +73,8 @@ async function stopWork(account: AccountArgs, routes) {
   await editLastTimeline(page, { date, time });
 
   await browser.close();
+
+  console.log(`Stopped work at ${time}`);
 }
 
 export async function holded(account: AccountArgs, args: HoldedArgs) {

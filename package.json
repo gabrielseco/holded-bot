@@ -1,7 +1,6 @@
 {
   "name": "holded-bot",
-  "private": true,
-  "version": "1.0.0",
+  "version": "1.0.0-beta.0",
   "description": "Holded bot from terminal",
   "author": "Gabriel García Seco <ggarciaseco@gmail.com>",
   "keywords": [
@@ -17,7 +16,7 @@
     "!dist/**/*.test.js"
   ],
   "scripts": {
-    "dev": "ts-node ./src/cli.ts",
+    "dev": "NODE_ENV=development ts-node ./src/cli.ts",
     "lint": "eslint --ext .ts src",
     "clean": "rimraf ./dist/ ./exec/",
     "build": "npm run clean && tsc",
