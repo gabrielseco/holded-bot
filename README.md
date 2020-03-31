@@ -1,58 +1,45 @@
-# typescript-cli-starter
+# holded-bot
+[![NPM Version](https://img.shields.io/npm/v/holded-bot.svg)](https://www.npmjs.com/package/holded-bot) [![NPM Downloads](https://img.shields.io/npm/dm/holded-bot.svg)](https://www.npmjs.com/package/holded-bot)
 
-A simple and zero-opinion typescript starter template for building cross-platform command line applications.
+ > A holded robot responsible to take hours for you
 
-![GitHub package.json dynamic](https://img.shields.io/github/package-json/keywords/khalidx/typescript-cli-starter.svg?style=flat-square)
 
-![GitHub](https://img.shields.io/github/license/khalidx/typescript-cli-starter.svg?style=flat-square)
-![GitHub package.json version](https://img.shields.io/github/package-json/v/khalidx/typescript-cli-starter.svg?style=flat-square)
-![GitHub top language](https://img.shields.io/github/languages/top/khalidx/typescript-cli-starter.svg?style=flat-square)
+ ## Installation
 
-![GitHub last commit](https://img.shields.io/github/last-commit/khalidx/typescript-cli-starter.svg?style=flat-square)
+ ```sh
+ npm i -g holded-bot
+ ``` 
 
-Includes:
 
-- [TypeScript](https://www.typescriptlang.org/), for writing good code
-- [Ava](https://www.npmjs.com/package/ava), for writing good tests
-- [Commander](https://www.npmjs.com/package/commander), for building CLI applications
-- [Pkg](https://www.npmjs.com/package/pkg), for building cross-platform native executables
+ ### Requirements
 
-Your application will be installable from `npm` or by sharing your native executables.
+ holded-bot requires 3 fields of info to start working for you
 
-## Usage
+ * Company: Insert the name of your enterprise holded account, usually it's your company name
+ * Email: Your email in holded
+ * Password: Your password in holded
 
-### **dev**
+ This fields are saved in your Keychain in mac, in another platforms like linux or windows check the [keytar module](http://atom.github.io/node-keytar/)
 
-`npm run dev`
 
-Runs the CLI application.
+ ### Use
 
-You can pass arguments to your application by running `npm run dev -- --your-argument`. The extra `--` is so that your arguments are passed to your CLI application, and not `npm`.
+It has two commands start and stop
 
-### **clean**
 
-`npm run clean`
+#### Start
 
-Removes any built code and any built executables.
+Start takes the actual time and inserts it in the day of the week.
 
-### **build**
+```sh
+  holded-bot start
+```
 
-`npm run build`
+#### Stop
 
-Cleans, then builds the TypeScript code.
+Stop commands updates the time when you stop the task
 
-Your built code will be in the `./dist/` directory.
+```sh
+  holded-bot stop
+```
 
-### **test**
-
-`npm run test`
-
-Cleans, then builds, and tests the built code.
-
-### **bundle**
-
-`npm run bundle`
-
-Cleans, then builds, then bundles into native executables for Windows, Mac, and Linux.
-
-Your shareable executables will be in the `./exec/` directory.

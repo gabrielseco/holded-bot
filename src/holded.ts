@@ -7,7 +7,6 @@ import {
   fillInputs,
   editLastTimeline
 } from './puppetter';
-import { Routes } from './routes';
 
 export interface HoldedArgs {
   start: boolean;
@@ -15,12 +14,11 @@ export interface HoldedArgs {
 }
 
 export interface AccountArgs {
-  company: string;
   email: string;
   password: string;
 }
 
-async function startWork(account: AccountArgs, routes): Promise<any> {
+export async function startWork(account: AccountArgs, routes): Promise<any> {
   try {
     const url = routes.LOGIN;
     const { page, browser } = await startWithUrl(puppeteer, url);
@@ -28,7 +26,7 @@ async function startWork(account: AccountArgs, routes): Promise<any> {
 
     const time = DateTime.local().toLocaleString(DateTime.TIME_SIMPLE);
     const timeEnd = DateTime.local()
-      .plus({ hour: 6 })
+      .plus({ minutes: 30 })
       .toLocaleString(DateTime.TIME_SIMPLE);
 
     login(page, {
@@ -47,7 +45,7 @@ async function startWork(account: AccountArgs, routes): Promise<any> {
       timeEnd
     });
 
-    await browser.close();
+    //await browser.close();
 
     console.log(`Start work at ${time}`);
   } catch (error) {
@@ -55,7 +53,7 @@ async function startWork(account: AccountArgs, routes): Promise<any> {
   }
 }
 
-async function stopWork(account: AccountArgs, routes) {
+export async function stopWork(account: AccountArgs, routes) {
   const url = routes.LOGIN;
   const { page, browser } = await startWithUrl(puppeteer, url);
   const time = DateTime.local().toLocaleString(DateTime.TIME_SIMPLE);
@@ -75,14 +73,4 @@ async function stopWork(account: AccountArgs, routes) {
   await browser.close();
 
   console.log(`Stopped work at ${time}`);
-}
-
-export async function holded(account: AccountArgs, args: HoldedArgs) {
-  const routes = Routes({ business: account.company });
-  if (args.start) {
-    startWork(account, routes);
-  }
-  if (args.stop) {
-    stopWork(account, routes);
-  }
 }
