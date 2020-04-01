@@ -8,20 +8,23 @@ import {
   editLastTimeline
 } from './puppetter';
 
-export interface HoldedArgs {
-  start: boolean;
-  stop: boolean;
-}
-
-export interface AccountArgs {
+interface AccountArgs {
   email: string;
   password: string;
 }
 
-export async function startWork(account: AccountArgs, routes): Promise<any> {
+interface CliArgs {
+  debug: boolean;
+}
+
+export async function startWork(
+  account: AccountArgs,
+  routes,
+  args: CliArgs
+): Promise<any> {
   try {
     const url = routes.LOGIN;
-    const { page, browser } = await startWithUrl(puppeteer, url);
+    const { page, browser } = await startWithUrl(puppeteer, url, args);
     const dayOfTheWeek = DateTime.local().weekday;
 
     const time = DateTime.local().toLocaleString(DateTime.TIME_SIMPLE);
@@ -45,7 +48,7 @@ export async function startWork(account: AccountArgs, routes): Promise<any> {
       timeEnd
     });
 
-    //await browser.close();
+    await browser.close();
 
     console.log(`Start work at ${time}`);
   } catch (error) {
@@ -53,9 +56,9 @@ export async function startWork(account: AccountArgs, routes): Promise<any> {
   }
 }
 
-export async function stopWork(account: AccountArgs, routes) {
+export async function stopWork(account: AccountArgs, routes, args: CliArgs) {
   const url = routes.LOGIN;
-  const { page, browser } = await startWithUrl(puppeteer, url);
+  const { page, browser } = await startWithUrl(puppeteer, url, args);
   const time = DateTime.local().toLocaleString(DateTime.TIME_SIMPLE);
   const date = DateTime.local().toFormat('dd-MM-yyyy');
 

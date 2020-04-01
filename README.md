@@ -43,3 +43,6 @@ Stop commands updates the time when you stop the task
   holded-bot stop
 ```
 
+### Options
+
+- --debug you can pass the option argument so you can see puppeteer running

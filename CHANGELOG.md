@@ -13,6 +13,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Removed
 ### BREAKING CHANGES
 
+## [1.0.0-beta.3] - 2020-04-01
+### Added
+  - Option --debug so you can the puppeteer running in case you need to debug
+### Fixed
+  - Command start didn't finish
 
 ## [1.0.0-beta.2] - 2020-03-31
 ### BREAKING CHANGES

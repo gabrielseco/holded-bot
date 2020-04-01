@@ -13,18 +13,20 @@ function executeCli({ email, company, password }) {
 
   program.version(packageJSON.version);
 
+  program.option('-debug, --debug', 'Debug puppeteer');
+
   program
     .command('start')
     .description('writes into the holded the time')
     .action(function () {
-      startWork({ email, password }, routes);
+      startWork({ email, password }, routes, { debug: program.debug });
     });
 
   program
     .command('stop')
     .description('updates holded time with the time')
     .action(function () {
-      stopWork({ email, password }, routes);
+      stopWork({ email, password }, routes, { debug: program.debug });
     });
 
   program.parse(process.argv);
