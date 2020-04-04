@@ -14,7 +14,8 @@ interface AccountArgs {
 }
 
 interface CliArgs {
-  debug: boolean;
+  debug?: boolean;
+  time?: boolean;
 }
 
 export async function startWork(
@@ -27,8 +28,9 @@ export async function startWork(
     const { page, browser } = await startWithUrl(puppeteer, url, args);
     const dayOfTheWeek = DateTime.local().weekday;
 
-    const time = DateTime.local().toLocaleString(DateTime.TIME_SIMPLE);
-    const timeEnd = DateTime.local()
+    const time =
+      args.time || DateTime.local().toLocaleString(DateTime.TIME_SIMPLE);
+    const timeEnd = DateTime.fromISO(time)
       .plus({ minutes: 30 })
       .toLocaleString(DateTime.TIME_SIMPLE);
 
@@ -59,7 +61,8 @@ export async function startWork(
 export async function stopWork(account: AccountArgs, routes, args: CliArgs) {
   const url = routes.LOGIN;
   const { page, browser } = await startWithUrl(puppeteer, url, args);
-  const time = DateTime.local().toLocaleString(DateTime.TIME_SIMPLE);
+  const time =
+    args.time || DateTime.local().toLocaleString(DateTime.TIME_SIMPLE);
   const date = DateTime.local().toFormat('dd-MM-yyyy');
 
   login(page, {

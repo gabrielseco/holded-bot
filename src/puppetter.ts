@@ -1,4 +1,4 @@
-export async function login(page, form) {
+export async function login(page, form): Promise<void> {
   try {
     await page.type('#tpemail', form.username);
     await page.type('#tppassword', form.password);
@@ -12,7 +12,7 @@ export async function login(page, form) {
 export async function startWithUrl(
   puppeteer,
   url: string,
-  options: { debug: boolean }
+  options: { debug?: boolean }
 ) {
   try {
     const browser = await puppeteer.launch({
@@ -31,7 +31,7 @@ export async function startWithUrl(
   }
 }
 
-export async function addTimeButton(page, dayOfTheWeek) {
+export async function addTimeButton(page, dayOfTheWeek: number): Promise<void> {
   try {
     const links = await page.$$('div.timeline-additem');
     const link = links[dayOfTheWeek - 1];
@@ -41,7 +41,7 @@ export async function addTimeButton(page, dayOfTheWeek) {
   }
 }
 
-async function fillInput(page, options) {
+async function fillInput(page, options): Promise<void> {
   try {
     await page.evaluate(
       (selector, time) => {
@@ -61,7 +61,7 @@ async function fillInput(page, options) {
   }
 }
 
-export async function fillInputs(page, options) {
+export async function fillInputs(page, options): Promise<void> {
   try {
     await fillInput(page, {
       selector: 'timerange-inputstart',
@@ -79,7 +79,7 @@ export async function fillInputs(page, options) {
   }
 }
 
-export async function editLastTimeline(page, options) {
+export async function editLastTimeline(page, options): Promise<void> {
   try {
     await page.evaluate(date => {
       const selector = `td[data-date="${date}"] .timeline-item`;
