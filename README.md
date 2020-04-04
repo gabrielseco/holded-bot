@@ -45,4 +45,7 @@ Stop commands updates the time when you stop the task
 
 ### Options
 
-- --debug you can pass the option argument so you can see puppeteer running
+| Option | Alias | Description |
+| --- | --- | --- |
+| --debug | -d | Debug puppeteer so you what happens under the hood |
+| --time | -t | Give a time in hh:mm format so you can put the time you want for a day |

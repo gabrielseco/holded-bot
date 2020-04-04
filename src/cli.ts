@@ -19,27 +19,26 @@ function executeCli({ email, company, password }: ExecuteCliArgs): void {
 
   program.version(packageJSON.version);
 
-  program.option('-debug, --debug', 'Debug puppeteer');
+  program.option('-d, --debug', 'Debug puppeteer');
+  program.option('-t, --time <time>', 'You can add the exact time here');
 
   program
     .command('start')
     .description('writes into the holded the time')
-    .option('-t, --time <time>', 'You can add the exact time here')
-    .action(function (options) {
+    .action(function () {
       startWork({ email, password }, routes, {
         debug: program.debug,
-        time: options.time
+        time: program.time
       });
     });
 
   program
     .command('stop')
     .description('updates holded time with the time')
-    .option('-t, --time <time>', 'You can add the exact time here')
-    .action(function (options) {
+    .action(function () {
       stopWork({ email, password }, routes, {
         debug: program.debug,
-        time: options.time
+        time: program.time
       });
     });
 
