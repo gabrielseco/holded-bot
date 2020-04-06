@@ -22,13 +22,15 @@
     "build": "npm run clean && tsc",
     "test": "jest --coverage",
     "test:watch": "jest --watchAll --coverage",
-    "bundle": "npm run build && pkg . --out-dir ./exec/"
+    "bundle": "npm run build && pkg . --out-dir ./exec/",
+    "report-coverage": "cat ./coverage/lcov.info | coveralls"
   },
   "devDependencies": {
     "@types/jest": "^25.2.1",
     "@types/luxon": "^1.22.0",
     "@typescript-eslint/eslint-plugin": "^2.25.0",
     "@typescript-eslint/parser": "^2.25.0",
+    "coveralls": "^3.0.11",
     "eslint": "^6.8.0",
     "eslint-config-prettier": "^6.10.1",
     "eslint-plugin-prettier": "^3.1.2",
