@@ -1,5 +1,5 @@
 # holded-bot
-[![NPM Version](https://img.shields.io/npm/v/holded-bot.svg)](https://www.npmjs.com/package/holded-bot) [![NPM Downloads](https://img.shields.io/npm/dm/holded-bot.svg)](https://www.npmjs.com/package/holded-bot)[![Travis](https://travis-ci.org/gabrielseco/holded-bot.svg?branch=master)](https://travis-ci.org/gabrielseco/holded-bot) [![Coverage Status](https://coveralls.io/repos/github/gabrielseco/holded-bot/badge.svg?branch=master)](https://coveralls.io/github/gabrielseco/holded-bot?branch=master)
+[![NPM Version](https://img.shields.io/npm/v/holded-bot.svg)](https://www.npmjs.com/package/holded-bot) [![NPM Downloads](https://img.shields.io/npm/dm/holded-bot.svg)](https://www.npmjs.com/package/holded-bot)[![Travis](https://api.travis-ci.com/gabrielseco/holded-bot.svg?branch=master)](https://travis-ci.org/gabrielseco/holded-bot) [![Coverage Status](https://coveralls.io/repos/github/gabrielseco/holded-bot/badge.svg?branch=master)](https://coveralls.io/github/gabrielseco/holded-bot?branch=master)
 
  > A holded robot responsible to take hours for you
 
