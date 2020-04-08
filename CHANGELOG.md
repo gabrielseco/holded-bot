@@ -13,6 +13,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Removed
 ### BREAKING CHANGES
 
+## [1.0.0-beta.6] - 2020-04-08
+### Fixed
+- Wait for the xhr request to complete
+
 ## [1.0.0-beta.5] - 2020-04-06
 ### Fixed
 - Fixed problem with dates

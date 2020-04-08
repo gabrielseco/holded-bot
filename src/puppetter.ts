@@ -1,4 +1,7 @@
-export async function login(page, form): Promise<void> {
+import { Page, Browser } from 'puppeteer';
+import puppeteer from 'puppeteer';
+
+export async function login(page: Page, form): Promise<void> {
   try {
     await page.type('#tpemail', form.username);
     await page.type('#tppassword', form.password);
@@ -10,10 +13,9 @@ export async function login(page, form): Promise<void> {
 }
 
 export async function startWithUrl(
-  puppeteer,
   url: string,
   options: { debug?: boolean }
-) {
+): Promise<{ page: Page; browser: Browser }> {
   try {
     const browser = await puppeteer.launch({
       headless: !options.debug
@@ -31,7 +33,10 @@ export async function startWithUrl(
   }
 }
 
-export async function addTimeButton(page, dayOfTheWeek: number): Promise<void> {
+export async function addTimeButton(
+  page: Page,
+  dayOfTheWeek: number
+): Promise<void> {
   try {
     const links = await page.$$('div.timeline-additem');
     const link = links[dayOfTheWeek - 1];
@@ -41,7 +46,7 @@ export async function addTimeButton(page, dayOfTheWeek: number): Promise<void> {
   }
 }
 
-async function fillInput(page, options): Promise<void> {
+async function fillInput(page: Page, options): Promise<void> {
   try {
     await page.evaluate(
       (selector, time) => {
@@ -61,7 +66,7 @@ async function fillInput(page, options): Promise<void> {
   }
 }
 
-export async function fillInputs(page, options): Promise<void> {
+export async function fillInputs(page: Page, options): Promise<void> {
   try {
     await fillInput(page, {
       selector: 'timerange-inputstart',
@@ -79,7 +84,7 @@ export async function fillInputs(page, options): Promise<void> {
   }
 }
 
-export async function editLastTimeline(page, options): Promise<void> {
+export async function editLastTimeline(page: Page, options): Promise<void> {
   try {
     await page.evaluate(date => {
       const selector = `td[data-date="${date}"] .timeline-item`;
@@ -98,3 +103,14 @@ export async function editLastTimeline(page, options): Promise<void> {
     console.log('error editing last timeline');
   }
 }
+
+export const waitForResponse = (page: Page, url: string): Promise<unknown> => {
+  return new Promise(resolve => {
+    page.on('response', function callback(response) {
+      if (response.url() === url) {
+        resolve(response);
+        page.removeListener('response', callback);
+      }
+    });
+  });
+};
