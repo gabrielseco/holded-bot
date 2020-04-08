@@ -1,11 +1,11 @@
-import puppeteer from 'puppeteer';
 import { DateTime } from 'luxon';
 import {
   login,
   startWithUrl,
   addTimeButton,
   fillInputs,
-  editLastTimeline
+  editLastTimeline,
+  waitForResponse
 } from './puppetter';
 
 interface AccountArgs {
@@ -18,7 +18,7 @@ interface CliArgs {
   time?: string;
 }
 
-export function getTimes(time?: string) {
+export function getTimes(time?: string): { time: string; timeEnd: string } {
   const FORMAT_TIME = 'HH:mm';
   const outputTime = time || DateTime.local().toFormat(FORMAT_TIME);
   const timeEnd = DateTime.fromISO(outputTime)
@@ -35,10 +35,10 @@ export async function startWork(
   account: AccountArgs,
   routes,
   args: CliArgs
-): Promise<any> {
+): Promise<void> {
   try {
     const url = routes.LOGIN;
-    const { page, browser } = await startWithUrl(puppeteer, url, args);
+    const { page, browser } = await startWithUrl(url, args);
     const dayOfTheWeek = DateTime.local().weekday;
     const { time, timeEnd } = getTimes(args.time);
 
@@ -58,6 +58,11 @@ export async function startWork(
       timeEnd
     });
 
+    await waitForResponse(
+      page,
+      'https://app.holded.com/tp/timetracking/entries/save'
+    );
+
     await browser.close();
 
     console.log(`Start work at ${time}`);
@@ -66,9 +71,13 @@ export async function startWork(
   }
 }
 
-export async function stopWork(account: AccountArgs, routes, args: CliArgs) {
+export async function stopWork(
+  account: AccountArgs,
+  routes,
+  args: CliArgs
+): Promise<void> {
   const url = routes.LOGIN;
-  const { page, browser } = await startWithUrl(puppeteer, url, args);
+  const { page, browser } = await startWithUrl(url, args);
   const { time } = getTimes(args.time);
   const date = DateTime.local().toFormat('dd-MM-yyyy');
 
@@ -82,6 +91,11 @@ export async function stopWork(account: AccountArgs, routes, args: CliArgs) {
   await page.goto(routes.TRACKING);
 
   await editLastTimeline(page, { date, time });
+
+  await waitForResponse(
+    page,
+    'https://app.holded.com/tp/timetracking/entries/save'
+  );
 
   await browser.close();
 
