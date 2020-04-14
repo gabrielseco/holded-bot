@@ -19,7 +19,7 @@ interface CliArgs {
   time?: string;
 }
 
-function formatTime(time?: string): string {
+function formatTime(time: string): string {
   const [hour, minutes] = time.split(':');
 
   if (hour.length === 1 && parseInt(hour, 10) < 10) {
