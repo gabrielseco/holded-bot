@@ -1,4 +1,5 @@
 import { DateTime } from 'luxon';
+import { RoutesObject } from './routes';
 import {
   login,
   startWithUrl,
@@ -18,9 +19,20 @@ interface CliArgs {
   time?: string;
 }
 
+function formatTime(time?: string): string {
+  const [hour, minutes] = time.split(':');
+
+  if (hour.length === 1 && parseInt(hour, 10) < 10) {
+    return `0${hour}:${minutes}`;
+  }
+
+  return time;
+}
+
 export function getTimes(time?: string): { time: string; timeEnd: string } {
   const FORMAT_TIME = 'HH:mm';
-  const outputTime = time || DateTime.local().toFormat(FORMAT_TIME);
+  const formattedTime = time ? formatTime(time) : time;
+  const outputTime = formattedTime || DateTime.local().toFormat(FORMAT_TIME);
   const timeEnd = DateTime.fromISO(outputTime)
     .plus({ minutes: 30 })
     .toFormat(FORMAT_TIME);
@@ -33,7 +45,7 @@ export function getTimes(time?: string): { time: string; timeEnd: string } {
 
 export async function startWork(
   account: AccountArgs,
-  routes,
+  routes: RoutesObject,
   args: CliArgs
 ): Promise<void> {
   try {
@@ -58,10 +70,7 @@ export async function startWork(
       timeEnd
     });
 
-    await waitForResponse(
-      page,
-      'https://app.holded.com/tp/timetracking/entries/save'
-    );
+    await waitForResponse(page, routes.SAVE_TIME);
 
     await browser.close();
 
@@ -73,7 +82,7 @@ export async function startWork(
 
 export async function stopWork(
   account: AccountArgs,
-  routes,
+  routes: RoutesObject,
   args: CliArgs
 ): Promise<void> {
   const url = routes.LOGIN;
@@ -92,10 +101,7 @@ export async function stopWork(
 
   await editLastTimeline(page, { date, time });
 
-  await waitForResponse(
-    page,
-    'https://app.holded.com/tp/timetracking/entries/save'
-  );
+  await waitForResponse(page, routes.SAVE_TIME);
 
   await browser.close();
 

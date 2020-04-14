@@ -27,4 +27,18 @@ describe('Without having dates mocked', () => {
     expect(time).toBe('10:00');
     expect(timeEnd).toBe('10:30');
   });
+
+  it('should return the time right now and the timeEnd thirty minutes later', () => {
+    const { time, timeEnd } = getTimes('09:00');
+
+    expect(time).toBe('09:00');
+    expect(timeEnd).toBe('09:30');
+  });
+
+  it('should return the correct time even if the time is not well formatted', () => {
+    const { time, timeEnd } = getTimes('9:00');
+
+    expect(time).toBe('09:00');
+    expect(timeEnd).toBe('09:30');
+  });
 });
