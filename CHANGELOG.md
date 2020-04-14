@@ -13,6 +13,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Removed
 ### BREAKING CHANGES
 
+## [1.0.0-beta.7] - 2020-04-14
+### Fixed
+- If you input a time like 9:50 gets transformed to 09:50
+
 ## [1.0.0-beta.6] - 2020-04-08
 ### Fixed
 - Wait for the xhr request to complete
